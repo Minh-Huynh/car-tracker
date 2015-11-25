@@ -1,0 +1,34 @@
+<h3>GovieVan!</h3>
+  <% if flash[:error] %>
+    <%= flash[:error] %>
+  <% else %>
+    <%= flash[:notice] %>
+  <% end %>
+  <br>
+  <% if @reservation.errors %>
+    <% @reservation.errors.full_messages.each do |message|%>
+      <%= message %>
+    <% end %>
+  <% end %>
+
+<ul>
+<% @cars.each do |car| %>
+  <li><%= "#{car.year} #{car.make} #{car.model}" %>
+    <%= form_for [car, @reservation] do |f|%>
+      <%= f.label :reserved_from %><br>
+      <%= f.datetime_select :reserved_from %><br>
+      <%= f.label :reserved_to %><br>
+      <%= f.datetime_select :reserved_to %>
+      <%= f.submit "Reserve" %>
+    <% end %>
+    Current Reservations: <br>
+    <ul>
+    <% car.reservations.each do |reservation| %>
+      <li>
+      <%= "#{reservation.driver.name} from: #{reservation.reserved_from.inspect} to: #{reservation.reserved_to.inspect}" %>
+      </li>
+    <% end %>
+    </ul>
+  </li>
+<% end %>
+</ul>
