@@ -11,8 +11,8 @@ class ReservationsController < ApplicationController
       render "cars/index"
       return
     end
-    @start = Time.strptime(time[:reserved_from],'%m/%d/%Y %I:%M %p')#.in_time_zone
-    @end = Time.strptime(time[:reserved_to],'%m/%d/%Y %I:%M %p')#.in_time_zone
+    @start = Time.strptime(time[:reserved_from],'%m/%d/%Y %I:%M %p').in_time_zone
+    @end = Time.strptime(time[:reserved_to],'%m/%d/%Y %I:%M %p').in_time_zone
 
     @reservation = Reservation.new(reserved_from: @start, reserved_to: @end, car_id: params[:car_id], driver_id:current_user.id )
     if @reservation.save
