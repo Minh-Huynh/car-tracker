@@ -1,0 +1,15 @@
+<%= render 'shared/header' %>
+<%= render 'shared/errors' %>
+<div class="container offset3 ">
+  <div class= "well col-md-8 col-md-offset-2" >
+    <div class="navbar-form">
+      <%= form_tag "/login" do %>
+        <%= label_tag(:user, "username") %>
+        <%= text_field_tag(:user) %>
+        <%= label_tag(:password, "password") %>
+        <%= password_field_tag(:password) %>
+      <%= submit_tag"Login"%>
+      <% end %>
+    </div>
+  </div>
+</div>

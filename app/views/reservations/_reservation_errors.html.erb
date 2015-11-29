@@ -1,0 +1,8 @@
+  <% if reservation.errors %>
+    <div class="alert alert-danger" role="alert">
+      <% reservation.errors.full_messages.each do |message|%>
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <%= message %><br>
+        <% end %>
+    </div>
+<% end %>

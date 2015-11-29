@@ -2,6 +2,8 @@ class Reservation < ActiveRecord::Base
 belongs_to :car
 belongs_to :driver
 validate :return_before_pickup_time, :conflict
+validates :reserved_from, :reserved_to, presence: true
+before_save :delete_old_reservations
 
   def return_before_pickup_time
     if self.reserved_to < self.reserved_from
@@ -15,6 +17,10 @@ validate :return_before_pickup_time, :conflict
         errors.add(:time, "Schedule conflict: #{existing.driver.name} from: #{existing.reserved_from} to: #{existing.reserved_to}")
       end
     end
+  end
+
+  def delete_old_reservations
+    Reservation.where("reserved_to < ?", Time.zone.now).destroy_all
   end
 
 end

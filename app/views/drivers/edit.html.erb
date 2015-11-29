@@ -1,0 +1,21 @@
+<%= render 'shared/header' %>
+<%= render 'shared/errors' %>
+<div class="col-md-7 col-md-offset-2">
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Update Profile
+    </div>
+      <div class="panel-body">
+      <%= render 'shared/obj_errors', obj: @current_user %>
+    <%= form_for @current_user do |f| %>
+  
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+      <%= f.submit "Update" %>
+
+    <% end %>
+    </div>
+   </div>
+</div>

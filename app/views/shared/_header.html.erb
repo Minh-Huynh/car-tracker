@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href=<%= root_path %>>GovieVan!</a>
+    </div>
+    <% if logged_in? %>
+    <p class="navbar-text"><%= "Welcome, #{current_user.name}" %></p>
+    <ul class="nav navbar-nav">
+      <li><a href=<%= edit_driver_path(current_user) %>>Edit Profile</a>
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add/Edit Vehicle<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% Car.all.each do |car| %>
+            <li><a href= <%= edit_car_path(car) %> > <%= "#{car.year} #{car.make} #{car.model}" %>
+            </a></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
+            <li><a href=<%= new_car_path %> >Add New Vehicle</a></li>
+          </ul>
+        </li>
+      <li><a href="/logout">Log Out</a></li>
+      </ul>
+    </div>
+    <% end %>
+  </div>
+</nav>

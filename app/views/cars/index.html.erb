@@ -1,34 +1,73 @@
-<h3>GovieVan!</h3>
-  <% if flash[:error] %>
-    <%= flash[:error] %>
-  <% else %>
-    <%= flash[:notice] %>
-  <% end %>
-  <br>
-  <% if @reservation.errors %>
-    <% @reservation.errors.full_messages.each do |message|%>
-      <%= message %>
-    <% end %>
-  <% end %>
-
-<ul>
-<% @cars.each do |car| %>
-  <li><%= "#{car.year} #{car.make} #{car.model}" %>
-    <%= form_for [car, @reservation] do |f|%>
-      <%= f.label :reserved_from %><br>
-      <%= f.datetime_select :reserved_from %><br>
-      <%= f.label :reserved_to %><br>
-      <%= f.datetime_select :reserved_to %>
-      <%= f.submit "Reserve" %>
-    <% end %>
-    Current Reservations: <br>
-    <ul>
-    <% car.reservations.each do |reservation| %>
-      <li>
-      <%= "#{reservation.driver.name} from: #{reservation.reserved_from.inspect} to: #{reservation.reserved_to.inspect}" %>
-      </li>
-    <% end %>
-    </ul>
-  </li>
+<%= render 'shared/header' %>
+<%= render 'shared/errors' %>
+<div class = "navbar-form">
+  <% @cars.each do |car| %>
+    <div class="col-md-4">
+      <div class= "panel panel-primary">
+        <div class="panel-heading">
+          <h5 class="panel-title-front-page">
+            <%= "'#{car.year.to_s[2,3]} #{car.make} #{car.model}" %>
+          </h5>
+          <div class="current_status_label">
+            <% if car.current_reservation %>
+              <span class="label label-warning"><%= "#{car.current_reservation.driver.name} #{car.current_reservation.reserved_from.strftime("%H:%M")}-#{car.current_reservation.reserved_to.strftime("%H:%M")}" %></span>
+            <% else %>
+              <span class="label label-success" ><%= "AVAILABLE" %></span>
+            <% end %>
+          </div>
+        </div>
+      <div class="panel-body-front-page<%='-time-error' if car===@reservation.car && @reservation.errors %>">
+        <% if car === @reservation.car %>
+          <%= render 'reservations/reservation_errors', reservation:@reservation, date_error: @date_format_error %>
+        <% end %>
+        <%= form_for([car, @reservation],html:{class:"navbar-form"}) do |f|%>
+          <div class="form-group">
+            <%= f.label :reserve_from %>
+            <div class='col-med-2'>
+            <div class='input-group date reservation_time_field'>
+              <%= f.text_field :reserved_from, class:'form-control' %>
+              <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+            </div>
+            <%= f.label :reserve_to %>
+            <div class='col-med-2'>
+              <div class='input-group date reservation_time_field'>
+                <%= f.text_field :reserved_to, class:'form-control' %>
+              <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+              </div>
+            </div>
+                <br>
+                <%= f.submit "Confirm", class:'btn btn-success' %>
+                <% end %>
+          </div>
+      </div>
+      <div class = "panel-footer">
+        <button class= "btn btn-primary reservation-list-btn" type="button"> Reservations <span class="badge total-badge" id="car-<%= car.id %>-badge"><%= "#{car.reservations.size}" %></span></button>
+        <% if car.current_reservation && current_user.id === car.current_reservation.driver.id %>
+          <%= form_for [car,car.current_reservation],method:"delete" do |f| %>
+          <%= f.submit "Check Vehicle In", class:"btn btn-warning pull-right" %>
+          <% end %>
+        <% else %>
+          <button class= "expand-reserve btn btn-success pull-right" type="button">Make Reservation</button>
+        <% end %>
+        <div class="reservation_list">
+          <table class="table table-striped table-condensed reservation-table" id="car-<%= car.id %>-reservations">
+            <tr><th>Name</th><th>From</th><th>To</th></tr>
+          <tr>
+            <% car.reservations.each do |reservation| %>
+              <td><%="  #{reservation.driver.name}  " %></td>
+              <td><%= " #{reservation.reserved_from.strftime('%m/%d/%Y %I:%M %p')} " %> </td>
+              <td><%= " #{reservation.reserved_to.strftime('%m/%d/%Y %I:%M %p')} " %></td>
+          </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
-</ul>
+</div>

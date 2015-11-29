@@ -10,8 +10,20 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery_ujs
-//= require turbolinks
+//= require moment
 //= require jquery
+//= require jquery_ujs
+//= require bootstrap-datetimepicker
+//= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(document).ready(function(){
+    $('.reservation_time_field').datetimepicker();
+    $('.reservation-list-btn').click(function(){
+      $(this).siblings().not('form').toggle("slow");
+    });
+    $('.expand-reserve').click(function(){
+      $(this).parent().prev('.panel-body-front-page').show("slow");
+    });
+  });

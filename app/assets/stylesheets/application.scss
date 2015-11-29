@@ -13,3 +13,32 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
+
+.panel-title-front-page {
+  display:inline-block
+}
+
+.current_status_label{
+   float:right
+}
+
+.panel-body-front-page{
+  display:none
+}
+
+.panel-body-front-page-time-error{
+  display:block
+}
+
+.reservation-list-btn,.expand-reserve{
+  margin-bottom:10px
+}
+
+.reservation_list{
+  display:none
+}
+
+.edit_reservation{
+  display:inline
+}
