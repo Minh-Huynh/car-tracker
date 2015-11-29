@@ -6,7 +6,7 @@ class Car < ActiveRecord::Base
 
   def current_reservation
     self.reservations.each do |reservation|
-      if (reservation.reserved_from..reservation.reserved_to).cover?(DateTime.now)
+      if (reservation.reserved_from..reservation.reserved_to).cover?(Time.zone.now)
         return reservation
       end
     end
