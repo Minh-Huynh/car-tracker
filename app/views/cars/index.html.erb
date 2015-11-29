@@ -60,8 +60,8 @@
           <tr>
             <% car.reservations.each do |reservation| %>
               <td><%="  #{reservation.driver.name}  " %></td>
-              <td><%= " #{reservation.reserved_from.utc.strftime('%m/%d/%Y %I:%M %p')} " %> </td>
-              <td><%= " #{reservation.reserved_to.utc.strftime('%m/%d/%Y %I:%M %p')} " %></td>
+              <td><%= " #{reservation.reserved_from.strftime('%m/%d/%Y %I:%M %p')} " %> </td>
+              <td><%= " #{reservation.reserved_to.strftime('%m/%d/%Y %I:%M %p')} " %></td>
           </tr>
             <% end %>
           </table>
