@@ -2,6 +2,8 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href=<%= root_path %>>GovieVan!</a>
+      <p>DateTime:<%= DateTime.now %></p>
+      <p>Zone:<%= Time.zone.now %></p>
     </div>
     <% if logged_in? %>
     <p class="navbar-text"><%= "Welcome, #{current_user.name}" %></p>
