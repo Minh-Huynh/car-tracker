@@ -52,13 +52,23 @@
           <%= f.submit "Check Vehicle In", class:"btn btn-warning pull-right" %>
           <% end %>
         <% else %>
-          <button class= "expand-reserve btn btn-success pull-right" type="button">Make Reservation</button>
+          <button class= "expand-reserve btn btn-success pull-right" type="button">Make Reservation</button><br>
+        <% end %>
+        <% if car.current_reservation && current_user.id != car.current_reservation.driver.id %>
+          <%= form_for [car, @notification], remote:true , method:"post",html:{class:"notify"} do |f| %>
+          <div class="form-group">
+
+            <%= f.check_box(:car_id, {class:"notify-checkbox"}, car.id , nil)  %>
+            <%= f.label "Text me if vehicle is returned early" %>
+            </div>
+          <% end %>
+         
         <% end %>
         <div class="reservation_list">
           <table class="table table-striped table-condensed reservation-table" id="car-<%= car.id %>-reservations">
             <tr><th>Name</th><th>From</th><th>To</th></tr>
           <tr>
-            <% car.reservations.each do |reservation| %>
+            <% car.reservations.each do |reservation| %> 
               <td><%="  #{reservation.driver.name}  " %></td>
               <td><%= " #{reservation.reserved_from.strftime('%m/%d/%Y %I:%M %p')} " %> </td>
               <td><%= " #{reservation.reserved_to.strftime('%m/%d/%Y %I:%M %p')} " %></td>

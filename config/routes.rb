@@ -5,8 +5,10 @@ CarTracker::Application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   resources :cars do
       resources :reservations
+      resources :notifications
   end
   resources :drivers, except:[:destroy] do
     resources :reservations
+    resources :notifications
   end
 end

@@ -27,6 +27,8 @@ class ReservationsController < ApplicationController
     current_reservation = Car.find(params[:car_id]).current_reservation
     if current_reservation && current_user === current_reservation.driver
       current_reservation.delete
+      #you would send out texts here
+      Car.find(params[:car_id]).notifications.destroy_all
       flash[:notice] = "Car returned"
       redirect_to :back
     else

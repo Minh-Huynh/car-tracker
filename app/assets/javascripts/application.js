@@ -26,4 +26,10 @@ $(document).ready(function(){
     $('.expand-reserve').click(function(){
       $(this).parent().prev('.panel-body-front-page').show("slow");
     });
-  });
+    $('.notify-checkbox').click(function(){
+      
+      if ($(this).is(':checked')){
+          $(this).parents('form').submit()
+      }
+    });
+});

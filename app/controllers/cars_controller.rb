@@ -4,6 +4,7 @@ class CarsController < ApplicationController
   def index
     @cars = Car.all
     @reservation = Reservation.new
+    @notification = Notification.new
     render :index
   end
 
